@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.toshiba.ppok.dto.CityDto;
+import jp.co.toshiba.ppok.entity.City;
 import jp.co.toshiba.ppok.service.CentreLogicService;
 import jp.co.toshiba.ppok.utils.Messages;
 import jp.co.toshiba.ppok.utils.Pagination;
@@ -52,7 +54,57 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 	 */
 	private RestMsg jsonfiedResult;
 
-	private CityDto cityDto;
+	/**
+	 * This field corresponds to the database column ID
+	 */
+	private Integer id;
+
+	/**
+	 * This field corresponds to the database column NAME
+	 */
+	private String name;
+
+	/**
+	 * This field corresponds to the database column CONTINENT
+	 */
+	private String continent;
+
+	/**
+	 * This field corresponds to the database column NATION
+	 */
+	private String nation;
+
+	/**
+	 * This field corresponds to the database column DISTRICT
+	 */
+	private String district;
+
+	/**
+	 * This field corresponds to the database column POPULATION
+	 */
+	private Integer population;
+
+	/**
+	 * This field corresponds to the database column LANGUAGE
+	 */
+	private String language;
+
+	/**
+	 * ページング検索
+	 *
+	 * @return String
+	 */
+	@Action("checklist")
+	public String checkDuplicated() {
+		final String cityName = this.request.getParameter("cityName");
+		final List<City> checkDuplicate = this.centreLogicService.checkDuplicate(cityName);
+		if (checkDuplicate.isEmpty()) {
+			this.setJsonfiedResult(RestMsg.success());
+			return SUCCESS;
+		}
+		this.setJsonfiedResult(RestMsg.failure().add("validatedMsg", Messages.MSG004));
+		return SUCCESS;
+	}
 
 	/**
 	 * 都市情報を削除する
@@ -65,10 +117,6 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 		this.centreLogicService.removeById(Integer.parseInt(cityId));
 		this.setJsonfiedResult(RestMsg.success(Messages.MSG013));
 		return SUCCESS;
-	}
-
-	public CityDto getCityDto() {
-		return this.cityDto;
 	}
 
 	/**
@@ -84,6 +132,10 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 		return SUCCESS;
 	}
 
+	public String getContinent() {
+		return this.continent;
+	}
+
 	/**
 	 * 大陸名称を取得する
 	 *
@@ -96,6 +148,14 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 		return SUCCESS;
 	}
 
+	public String getDistrict() {
+		return this.district;
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
 	/**
 	 * getter for jsonfiedResult
 	 *
@@ -105,17 +165,29 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 		return this.jsonfiedResult;
 	}
 
+	public String getLanguage() {
+		return this.language;
+	}
+
 	/**
 	 * 公用語を取得する
 	 *
 	 * @return String
 	 */
 	@Action("language")
-	public String getLanguage() {
+	public String getLanguageByCty() {
 		final String nationVal = this.request.getParameter("nationVal");
 		final String languageByCty = this.centreLogicService.findLanguageByCty(nationVal);
 		this.setJsonfiedResult(RestMsg.success().add("languageByCty", languageByCty));
 		return SUCCESS;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getNation() {
+		return this.nation;
 	}
 
 	/**
@@ -129,6 +201,10 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 		final List<String> nationNames = this.centreLogicService.findNationsByCnt(continentVal);
 		this.setJsonfiedResult(RestMsg.success().add("nations", nationNames));
 		return SUCCESS;
+	}
+
+	public Integer getPopulation() {
+		return this.population;
 	}
 
 	/**
@@ -145,8 +221,36 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 		return SUCCESS;
 	}
 
-	public void setCityDto(final CityDto cityDto) {
-		this.cityDto = cityDto;
+	/**
+	 * 都市情報を保存する
+	 *
+	 * @return String
+	 */
+	@Action(value = "citySave", interceptorRefs = { @InterceptorRef(value = "json") })
+	public String saveCityInfo() {
+		final CityDto cityDto = new CityDto();
+		cityDto.setId(this.id);
+		cityDto.setName(this.name);
+		cityDto.setContinent(this.continent);
+		cityDto.setDistrict(this.district);
+		cityDto.setPopulation(this.population);
+		cityDto.setNation(this.nation);
+		cityDto.setLanguage(this.language);
+		this.centreLogicService.save(cityDto);
+		this.setJsonfiedResult(RestMsg.success(Messages.MSG011));
+		return SUCCESS;
+	}
+
+	public void setContinent(final String continent) {
+		this.continent = continent;
+	}
+
+	public void setDistrict(final String district) {
+		this.district = district;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
 	}
 
 	/**
@@ -156,6 +260,22 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 	 */
 	public void setJsonfiedResult(final RestMsg jsonfiedResult) {
 		this.jsonfiedResult = jsonfiedResult;
+	}
+
+	public void setLanguage(final String language) {
+		this.language = language;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public void setNation(final String nation) {
+		this.nation = nation;
+	}
+
+	public void setPopulation(final Integer population) {
+		this.population = population;
 	}
 
 	@Override
@@ -168,10 +288,17 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 	 *
 	 * @return String
 	 */
-	@Action("cityUpd")
+	@Action(value = "cityUpd", interceptorRefs = { @InterceptorRef(value = "json") })
 	public String updateCityInfo() {
-		final CityDto cityDto2 = this.getCityDto();
-		final RestMsg updateMsg = this.centreLogicService.update(cityDto2);
+		final CityDto cityDto = new CityDto();
+		cityDto.setId(this.id);
+		cityDto.setName(this.name);
+		cityDto.setContinent(this.continent);
+		cityDto.setDistrict(this.district);
+		cityDto.setPopulation(this.population);
+		cityDto.setNation(this.nation);
+		cityDto.setLanguage(this.language);
+		final RestMsg updateMsg = this.centreLogicService.update(cityDto);
 		this.setJsonfiedResult(updateMsg);
 		return SUCCESS;
 	}

@@ -240,7 +240,7 @@ $("#cityInfoSaveBtn").on('click', function() {
 		showValidationMsg("#populationInput", "success", "√");
 		// ajaxリクエストを送信して保存オプションをコミットする
 		$.ajax({
-			url: pathdeApp + '/city',
+			url: pathdeApp + '/citySave',
 			type: 'POST',
 			contentType: 'application/json',
 			dataType: 'json',
