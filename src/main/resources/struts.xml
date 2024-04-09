@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<!-- 基础包名 -->
+	<constant
+		name="struts.convention.package.locators.basePackage"
+		value="jp.co.toshiba.ppok" />
+	<!-- 包名后缀，默认为action、actions、struts、struts2 -->
+	<constant name="struts.convention.package.locators"
+		value="controller" />
+	<!-- IOC容器交给spring -->
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.convention.exclude.parentClassLoader"
+		value="false" />
+	<!-- 指定视图文件所在的目录地址 -->
+	<constant name="struts.convention.result.path"
+		value="/WEB-INF/" />
+	<!--设置Convention插件是否从其它jar包中搜索Action类，默认值为true -->
+	<constant name="struts.convention.action.disableJarScanning"
+		value="false" />
+	<!--设置Action的默认继承包 -->
+	<constant name="struts.convention.default.parent.package"
+		value="struts-default" />
+	<!--设置Convention插件文件协议类型 -->
+	<constant name="struts.convention.action.fileProtocols"
+		value="jar,wsjar" />
+</struts>
