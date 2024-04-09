@@ -116,7 +116,9 @@ public class CentreLogicServiceImpl implements CentreLogicService {
 			nations.addAll(list);
 			return nations;
 		}
-		final Specification<Country> specification = Specification.where(where1);
+		final Specification<Country> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("continent"), continentVal);
+		final Specification<Country> specification = Specification.where(where1).and(where2);
 		return this.countryRepository.findAll(specification).stream().map(Country::getName).distinct()
 				.sorted(Comparator.naturalOrder()).collect(Collectors.toList());
 	}
