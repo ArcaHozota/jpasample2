@@ -29,8 +29,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "country")
-@NamedQuery(name = "Country.findNationCode", query = "select cty.code from Country as cty "
-		+ "where cty.deleteFlg = 'visible' and cty.name =:nation")
+@NamedQuery(name = "Country.findNationCode", query = "select max(cty.code) from Country as cty "
+		+ "where cty.deleteFlg = 'visible' and cty.name =:nation group by cty.name")
 public final class Country implements Serializable {
 
 	private static final long serialVersionUID = 6762395398373991166L;
