@@ -311,7 +311,7 @@ function getLanguage(element, nationVal) {
 		data: 'nationVal=' + nationVal,
 		type: 'GET',
 		success: function(result) {
-			$("#languageEdit").text(result.extend.languages);
+			$("#languageEdit").text(result.extend.languageByCty);
 		}
 	});
 }

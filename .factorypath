@@ -92,4 +92,5 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/ow2/asm/asm-analysis/7.3.1/asm-analysis-7.3.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/struts/struts2-json-plugin/2.5.33/struts2-json-plugin-2.5.33.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/postgresql/postgresql/42.2.20/postgresql-42.2.20.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="false" runInBatchMode="false"/>
 </factorypath>

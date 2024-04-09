@@ -106,6 +106,19 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 	}
 
 	/**
+	 * 公用語を取得する
+	 *
+	 * @return String
+	 */
+	@Action("language")
+	public String getLanguage() {
+		final String nationVal = this.request.getParameter("nationVal");
+		final String languageByCty = this.centreLogicService.findLanguageByCty(nationVal);
+		this.setJsonfiedResult(RestMsg.success().add("languageByCty", languageByCty));
+		return SUCCESS;
+	}
+
+	/**
 	 * 国家名称を取得する
 	 *
 	 * @return String
