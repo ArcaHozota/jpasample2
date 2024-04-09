@@ -8,7 +8,7 @@ import jp.co.toshiba.ppok.utils.Messages;
 import lombok.extern.log4j.Log4j2;
 
 /**
- * Sshcrudアプリケーション
+ * Sshcrud2アプリケーション
  *
  * @author ArkamaHozota
  * @since 1.00beta
