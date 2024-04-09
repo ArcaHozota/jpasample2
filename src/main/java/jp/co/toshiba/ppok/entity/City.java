@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -28,8 +27,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "city")
-@NamedQueries({ @NamedQuery(name = "City.saiban", query = "select count(cn.id) + 1 from City as cn"),
-		@NamedQuery(name = "City.removeById", query = "update City as cn set cn.deleteFlg = 'removed' where cn.id =:id") })
+@NamedQuery(name = "City.saiban", query = "select count(cn.id) + 1 from City as cn")
 public final class City implements Serializable {
 
 	private static final long serialVersionUID = 1815689293387304425L;

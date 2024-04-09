@@ -1,5 +1,6 @@
 package jp.co.toshiba.ppok.service.impl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
@@ -17,10 +19,12 @@ import com.google.common.collect.Lists;
 import jp.co.toshiba.ppok.dto.CityDto;
 import jp.co.toshiba.ppok.entity.City;
 import jp.co.toshiba.ppok.entity.CityInfo;
+import jp.co.toshiba.ppok.entity.Country;
 import jp.co.toshiba.ppok.repository.CityInfoRepository;
 import jp.co.toshiba.ppok.repository.CityRepository;
 import jp.co.toshiba.ppok.repository.CountryRepository;
 import jp.co.toshiba.ppok.service.CentreLogicService;
+import jp.co.toshiba.ppok.utils.CommonException;
 import jp.co.toshiba.ppok.utils.Messages;
 import jp.co.toshiba.ppok.utils.Pagination;
 import jp.co.toshiba.ppok.utils.RestMsg;
@@ -80,27 +84,41 @@ public class CentreLogicServiceImpl implements CentreLogicService {
 
 	@Override
 	public List<String> findAllContinents() {
-		return this.countryRepository.findAllContinents();
+		final Specification<Country> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("deleteFlg"), Messages.MSG007);
+		return this.countryRepository.findAll(specification).stream().map(Country::getContinent).distinct()
+				.sorted(Comparator.naturalOrder()).collect(Collectors.toList());
 	}
 
 	@Override
 	public String findLanguageByCty(final String nationVal) {
-		return this.cityInfoRepository.getLanguage(nationVal);
+		final Specification<CityInfo> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("nation"), nationVal);
+		return this.cityInfoRepository.findAll(specification).stream().map(CityInfo::getLanguage)
+				.collect(Collectors.toList()).get(0);
 	}
 
 	@Override
 	public List<String> findNationsByCnt(final String continentVal) {
+		final Specification<Country> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("deleteFlg"), Messages.MSG007);
 		if (StringUtils.isDigital(continentVal)) {
 			final Integer id = Integer.parseInt(continentVal);
 			final List<String> nations = Lists.newArrayList();
 			final CityInfo cityInfo = this.cityInfoRepository.findById(id).orElseGet(CityInfo::new);
 			nations.add(cityInfo.getNation());
-			final List<String> list = this.countryRepository.findNationsByCnt(cityInfo.getContinent()).stream()
-					.filter(a -> StringUtils.isNotEqual(a, cityInfo.getNation())).collect(Collectors.toList());
+			final Specification<Country> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+					.equal(root.get("continent"), cityInfo.getContinent());
+			final Specification<Country> specification = Specification.where(where1).and(where2);
+			final List<String> list = this.countryRepository.findAll(specification).stream().map(Country::getName)
+					.filter(a -> StringUtils.isNotEqual(a, cityInfo.getNation())).distinct()
+					.sorted(Comparator.naturalOrder()).collect(Collectors.toList());
 			nations.addAll(list);
 			return nations;
 		}
-		return this.countryRepository.findNationsByCnt(continentVal);
+		final Specification<Country> specification = Specification.where(where1);
+		return this.countryRepository.findAll(specification).stream().map(Country::getName).distinct()
+				.sorted(Comparator.naturalOrder()).collect(Collectors.toList());
 	}
 
 	@Override
@@ -128,11 +146,11 @@ public class CentreLogicServiceImpl implements CentreLogicService {
 					sort = Integer.parseInt(keisan);
 				}
 				// 人口数量昇順で最初の15個都市の情報を吹き出します；
-				final List<CityDto> minimumRanks = this.cityInfoRepository.findMinimumRanks(sort).stream().map(item -> {
+				final List<CityDto> minimumRanks = this.cityInfoRepository.findAll().stream().map(item -> {
 					final CityDto cityDto = new CityDto();
 					SecondBeanUtils.copyNullableProperties(item, cityDto);
 					return cityDto;
-				}).collect(Collectors.toList());
+				}).sorted(Comparator.comparing(CityDto::getPopulation)).collect(Collectors.toList()).subList(0, sort);
 				if (pageMax >= sort) {
 					return Pagination.of(minimumRanks.subList(pageMin, sort), minimumRanks.size(), pageNum, PAGE_SIZE,
 							NAVIGATION_NUMBER);
@@ -147,11 +165,12 @@ public class CentreLogicServiceImpl implements CentreLogicService {
 					sort = Integer.parseInt(keisan);
 				}
 				// 人口数量降順で最初の15個都市の情報を吹き出します；
-				final List<CityDto> maximumRanks = this.cityInfoRepository.findMaximumRanks(sort).stream().map(item -> {
+				final List<CityDto> maximumRanks = this.cityInfoRepository.findAll().stream().map(item -> {
 					final CityDto cityDto = new CityDto();
 					SecondBeanUtils.copyNullableProperties(item, cityDto);
 					return cityDto;
-				}).collect(Collectors.toList());
+				}).sorted(Comparator.comparing(CityDto::getPopulation).reversed()).collect(Collectors.toList())
+						.subList(0, sort);
 				if (pageMax >= sort) {
 					return Pagination.of(maximumRanks.subList(pageMin, sort), maximumRanks.size(), pageNum, PAGE_SIZE,
 							NAVIGATION_NUMBER);
@@ -197,7 +216,11 @@ public class CentreLogicServiceImpl implements CentreLogicService {
 
 	@Override
 	public void removeById(final Integer id) {
-		this.cityRepository.removeById(id);
+		final City city = this.cityRepository.findById(id).orElseThrow(() -> {
+			throw new CommonException(Messages.MSG009);
+		});
+		city.setDeleteFlg(Messages.MSG008);
+		this.cityRepository.saveAndFlush(city);
 		this.cityInfoRepository.refresh();
 	}
 

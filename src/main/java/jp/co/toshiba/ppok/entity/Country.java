@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,10 +29,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "country")
-@NamedQueries({
-		@NamedQuery(name = "Country.findNationCode", query = "select cty.code from Country as cty where cty.deleteFlg = 'visible' and cty.name =:nation"),
-		@NamedQuery(name = "Country.findAllContinents", query = "select max(cty.continent) from Country as cty where cty.deleteFlg = 'visible' group by cty.continent order by cty.continent asc"),
-		@NamedQuery(name = "Country.findNationsByCnt", query = "select max(cty.name) from Country as cty where cty.deleteFlg = 'visible' and cty.continent =:continent group by cty.name order by cty.name asc") })
+@NamedQuery(name = "Country.findNationCode", query = "select cty.code from Country as cty "
+		+ "where cty.deleteFlg = 'visible' and cty.name =:nation")
 public final class Country implements Serializable {
 
 	private static final long serialVersionUID = 6762395398373991166L;
