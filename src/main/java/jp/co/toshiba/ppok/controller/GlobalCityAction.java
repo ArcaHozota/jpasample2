@@ -170,15 +170,6 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 	}
 
 	/**
-	 * getter for jsonfiedResult
-	 *
-	 * @return RestMsg
-	 */
-	public RestMsg getJsonfiedResult() {
-		return this.jsonfiedResult;
-	}
-
-	/**
 	 * 公用語を取得する
 	 *
 	 * @return String
@@ -229,15 +220,6 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 		this.centreLogicService.save(cityDto2);
 		this.setJsonfiedResult(RestMsg.success(Messages.MSG011));
 		return SUCCESS;
-	}
-
-	/**
-	 * setter of jsonfiedResult
-	 *
-	 * @param jsonfiedResult JSONリスポンスデータ
-	 */
-	public void setJsonfiedResult(final RestMsg jsonfiedResult) {
-		this.jsonfiedResult = jsonfiedResult;
 	}
 
 	@Override
