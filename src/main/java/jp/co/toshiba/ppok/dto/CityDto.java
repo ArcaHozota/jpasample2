@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppok.dto;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -9,7 +11,9 @@ import lombok.Data;
  * @since 1.00beta
  */
 @Data
-public final class CityDto {
+public final class CityDto implements Serializable {
+
+	private static final long serialVersionUID = -2612971388297855867L;
 
 	/**
 	 * This field corresponds to the database column ID

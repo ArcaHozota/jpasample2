@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RestMsg {
+public final class RestMsg {
 
 	/**
 	 * retrieve failed

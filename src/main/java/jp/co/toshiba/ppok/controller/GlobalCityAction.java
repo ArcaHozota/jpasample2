@@ -61,7 +61,7 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 	/**
 	 * 情報転送クラス
 	 */
-	private final transient CityDto cityDto = new CityDto();
+	private final CityDto cityDto = new CityDto();
 
 	/**
 	 * This field corresponds to the database column ID
