@@ -34,4 +34,7 @@
 	<!-- 禁止动态方法调用 -->
 	<constant name="struts.enable.DynamicMethodInvocation"
 		value="false" />
+	<!-- 默认action方法中URL无斜杠 -->
+	<constant name="struts.enable.SlashesInActionNames"
+		value="false" />
 </struts>
