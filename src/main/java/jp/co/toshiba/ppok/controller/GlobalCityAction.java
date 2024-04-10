@@ -51,17 +51,17 @@ public class GlobalCityAction extends ActionSupport implements ServletRequestAwa
 	/**
 	 * リクエスト
 	 */
-	private HttpServletRequest request;
+	private transient HttpServletRequest request;
 
 	/**
 	 * JSONリスポンス
 	 */
-	private RestMsg jsonfiedResult;
+	private transient RestMsg jsonfiedResult;
 
 	/**
 	 * 情報転送クラス
 	 */
-	private final CityDto cityDto = new CityDto();
+	private final transient CityDto cityDto = new CityDto();
 
 	/**
 	 * This field corresponds to the database column ID
