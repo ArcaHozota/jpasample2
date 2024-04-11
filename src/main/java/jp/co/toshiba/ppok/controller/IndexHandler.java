@@ -16,7 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace("/")
 @Result(name = "success", location = "/WEB-INF/cities.jsp")
 @Controller
-public class InitialAction extends ActionSupport {
+public class IndexHandler extends ActionSupport {
 
 	private static final long serialVersionUID = -8455008138473489275L;
 

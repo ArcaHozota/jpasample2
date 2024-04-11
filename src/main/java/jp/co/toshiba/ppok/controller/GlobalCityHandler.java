@@ -38,7 +38,7 @@ import lombok.Setter;
 		@Result(name = "none", type = "json", params = { "root", "jsonfiedResult" }) })
 @ParentPackage("json-default")
 @Controller
-public class GlobalCityAction extends ActionSupport implements ServletRequestAware {
+public class GlobalCityHandler extends ActionSupport implements ServletRequestAware {
 
 	private static final long serialVersionUID = -5336245503597367061L;
 

@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,17 +19,16 @@
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 <body>
-	<!-- ウェブページを構築する -->
+	<%--ウェブページを構築する--%>
 	<div class="container">
-		<!-- タイトル -->
+		<%--タイトル--%>
 		<div class="row">
 			<div class="col-lg-12">
 				<h1>グローバル都市情報一覧</h1>
 			</div>
 		</div>
-		<!-- 検索バーとボタン -->
+		<%--検索バーとボタン--%>
 		<div class="row">
 			<form class="form-inline col-lg-5" role="form">
 				<div class="input-group col-lg-5">
@@ -48,7 +46,7 @@
 				</button>
 			</div>
 		</div>
-		<!-- データ -->
+		<%--データ--%>
 		<div class="row">
 			<div class="col-lg-12">
 				<table id="cityTable" class="table table-hover table-sm">
@@ -68,7 +66,7 @@
 					</thead>
 					<tbody id="cityTableBody" class="table-group-divider"></tbody>
 				</table>
-				<!-- ページナビ -->
+				<%--ページナビ--%>
 				<div class="row">
 					<div id="pageInfos" class="col-lg-5"></div>
 					<div id="pageNavi" class="col-lg-7 d-flex justify-content-end"></div>
@@ -76,7 +74,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- データ追加モーダル -->
+	<%--データ追加モーダル--%>
 	<div class="modal fade" id="cityAddModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -135,7 +133,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- データ編集モーダル -->
+	<%--データ編集モーダル--%>
 	<div class="modal fade" id="cityEditModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -201,5 +199,4 @@
 	</div>
 	<script type="text/javascript" src="../static/js/citinavi.js"></script>
 </body>
-
 </html>
