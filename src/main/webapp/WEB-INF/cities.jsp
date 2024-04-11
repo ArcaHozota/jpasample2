@@ -9,13 +9,12 @@
 <title>CityList</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../static/css/bootstrap.min.css">
-<link rel="stylesheet" href="../static/css/customize.css">
-<link rel="shortcut icon" type="image/x-icon"
-	href="../static/favicon.ico" />
-<script type="text/javascript" src="../static/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../static/layer/layer.js"></script>
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/customize.css">
+<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico" />
+<script type="text/javascript" src="/static/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -197,6 +196,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="../static/js/citinavi.js"></script>
+	<script type="text/javascript" src="/static/js/citinavi.js"></script>
 </body>
 </html>
