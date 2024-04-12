@@ -284,7 +284,6 @@ function getCityInfo(id) {
 		url: pathdeApp + '/city',
 		data: 'id=' + id,
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			let cityData = result.extend.citySelected;
 			$("#nameEdit").text(cityData.name);
