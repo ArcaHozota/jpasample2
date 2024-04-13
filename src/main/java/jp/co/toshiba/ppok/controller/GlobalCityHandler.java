@@ -105,7 +105,7 @@ public class GlobalCityHandler extends ActionSupport implements ServletRequestAw
 	 */
 	@Action("checklist")
 	public String checkDuplicated() {
-		final String cityName = this.request.getParameter("cityName");
+		final String cityName = this.getRequest().getParameter("cityName");
 		final List<City> checkDuplicate = this.centreLogicService.checkDuplicate(cityName);
 		if (checkDuplicate.isEmpty()) {
 			this.setJsonfiedResult(RestMsg.success());
@@ -122,7 +122,7 @@ public class GlobalCityHandler extends ActionSupport implements ServletRequestAw
 	 */
 	@Action("cityDel")
 	public String deleteCityInfo() {
-		final String cityId = this.request.getParameter("cityId");
+		final String cityId = this.getRequest().getParameter("cityId");
 		this.centreLogicService.removeById(Integer.parseInt(cityId));
 		this.setJsonfiedResult(RestMsg.success(Messages.MSG013));
 		return NONE;
@@ -151,7 +151,7 @@ public class GlobalCityHandler extends ActionSupport implements ServletRequestAw
 	 */
 	@Action("city")
 	public String getCityInfoById() {
-		final String rawId = this.request.getParameter("id");
+		final String rawId = this.getRequest().getParameter("id");
 		final CityDto cityInfoById = this.centreLogicService.getCityInfoById(Integer.parseInt(rawId));
 		this.setJsonfiedResult(RestMsg.success().add("citySelected", cityInfoById));
 		return NONE;
@@ -176,7 +176,7 @@ public class GlobalCityHandler extends ActionSupport implements ServletRequestAw
 	 */
 	@Action("language")
 	public String getLanguageByCty() {
-		final String nationVal = this.request.getParameter("nationVal");
+		final String nationVal = this.getRequest().getParameter("nationVal");
 		final String languageByCty = this.centreLogicService.findLanguageByCty(nationVal);
 		this.setJsonfiedResult(RestMsg.success().add("languageByCty", languageByCty));
 		return NONE;
@@ -189,7 +189,7 @@ public class GlobalCityHandler extends ActionSupport implements ServletRequestAw
 	 */
 	@Action("countries")
 	public String getNations() {
-		final String continentVal = this.request.getParameter("continentVal");
+		final String continentVal = this.getRequest().getParameter("continentVal");
 		final List<String> nationNames = this.centreLogicService.findNationsByCnt(continentVal);
 		this.setJsonfiedResult(RestMsg.success().add("nations", nationNames));
 		return NONE;
@@ -202,8 +202,8 @@ public class GlobalCityHandler extends ActionSupport implements ServletRequestAw
 	 */
 	@Action("cities")
 	public String pagination() {
-		final String pageNum = this.request.getParameter("pageNum");
-		final String keyword = this.request.getParameter("keyword");
+		final String pageNum = this.getRequest().getParameter("pageNum");
+		final String keyword = this.getRequest().getParameter("keyword");
 		final Pagination<CityDto> pagination = this.centreLogicService.getPagination(Integer.valueOf(pageNum), keyword);
 		this.setJsonfiedResult(RestMsg.success().add("pageInfo", pagination));
 		return NONE;
