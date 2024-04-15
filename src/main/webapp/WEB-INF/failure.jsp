@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -30,9 +29,8 @@
 	<div class="container" style="margin-top: 60px;">
 		<div class="text-center">
 			<h2>システム情報</h2>
-			<c:if test="${request.getAttribute('exception')} != null">
-				<h6 th:text="${requestScope.exception.message}"></h6>
-			</c:if>
+			<h6
+				text="${request.getAttribute('exception') ne null ? request.getAttribute('exception').getMessage() : ''}"></h6>
 			<button id="backbutton"
 				style="width: 300px; margin: 0px auto 0px auto;"
 				class="btn btn-lg btn-warning btn-block">戻る</button>
