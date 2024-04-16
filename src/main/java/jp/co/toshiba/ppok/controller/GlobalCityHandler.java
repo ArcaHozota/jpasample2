@@ -1,5 +1,8 @@
 package jp.co.toshiba.ppok.controller;
 
+import static com.opensymphony.xwork2.Action.ERROR;
+import static com.opensymphony.xwork2.Action.NONE;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -34,8 +37,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Namespace("/ssmcrud2")
-@Results({ @Result(name = "error", location = "/WEB-INF/failure.jsp"),
-		@Result(name = "none", type = "json", params = { "root", "jsonfiedResult" }) })
+@Results({ @Result(name = ERROR, location = "/WEB-INF/failure.jsp"),
+		@Result(name = NONE, type = "json", params = { "root", "jsonfiedResult" }) })
 @ParentPackage("json-default")
 @Controller
 public class GlobalCityHandler extends ActionSupport implements ServletRequestAware {

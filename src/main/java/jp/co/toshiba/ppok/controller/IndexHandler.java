@@ -1,5 +1,7 @@
 package jp.co.toshiba.ppok.controller;
 
+import static com.opensymphony.xwork2.Action.SUCCESS;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -14,7 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @since 1.00beta
  */
 @Namespace("/")
-@Result(name = "success", location = "/WEB-INF/cities.jsp")
+@Result(name = SUCCESS, location = "/WEB-INF/cities.jsp")
 @Controller
 public class IndexHandler extends ActionSupport {
 
